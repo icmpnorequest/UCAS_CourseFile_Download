@@ -192,6 +192,8 @@ def downloadCourse(srcIndex, courseIndex):
     """
     # At most, each course include 2 child directories.
     try:
+        if not os.path.exists(Download_path):
+            os.mkdir(Download_path)
         if checkDir(srcIndex) == 1:
             chooseDir = CourseResource[srcIndex]
             print("chooseDir = ", chooseDir)
