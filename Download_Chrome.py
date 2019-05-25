@@ -178,7 +178,7 @@ def move_file(dst_path):
         if file.endswith(".crdownload"):
             time.sleep(5)
             continue
-        elif file.endswith(".pdf") or file.endswith(".pptx") or file.endswith(".ppt") or file.endswith(".docx") or file.endswith(".doc") or file.endswith(".zip") or file.endswith(".xlsx"):
+        elif file.endswith(".pdf") or file.endswith(".pptx") or file.endswith(".ppt") or file.endswith(".docx") or file.endswith(".doc") or file.endswith(".zip") or file.endswith(".xlsx") or file.endswith(".rar"):
             print("### Move %s ### \n" %file)
             shutil.move(Download_path + "/" + file, dst_path)
         else:
@@ -192,8 +192,6 @@ def downloadCourse(srcIndex, courseIndex):
     """
     # At most, each course include 2 child directories.
     try:
-        if not os.path.exists(Download_path):
-            os.mkdir(Download_path)
         if checkDir(srcIndex) == 1:
             chooseDir = CourseResource[srcIndex]
             print("chooseDir = ", chooseDir)
@@ -265,7 +263,11 @@ def downloadCourse(srcIndex, courseIndex):
                     print(e)
 
                 print("Move file to Dst path.\n")
-                # move_file(Download_path + "/" + AllCourses[courseIndex][0] + "/" + chooseDir + "/" + chooseDirTree[idx])
+                # print("checkDir(idx) = ", checkDir(idx))
+                # if checkDir(idx) == 1:
+                    # move_file(Download_path + "/" + AllCourses[courseIndex][0] + "/" + chooseDir + "/" + chooseDirTree[idx])
+                # elif checkDir(idx) == 0:
+                    # move_file(Download_path + "/" + AllCourses[courseIndex][0] + "/" + chooseDir)
                 move_file(Download_path + "/" + AllCourses[courseIndex][0] + "/" + chooseDir)
                 # srcDir_path = Download_path + "/" + AllCourses[courseIndex][0] + "/" + chooseDir
                 print("Move Successfully.\n")
@@ -322,7 +324,11 @@ if __name__ == '__main__':
     print("Please input your password: ")
     password = input()
 
-    # 0. Open a Chrome browser
+    # 0.1 Create a Dir named "Download";
+    if not os.path.exists(Download_path):
+        os.mkdir(Download_path)
+
+    # 0.2 Open a Chrome browser
     options = Options()
     options.add_experimental_option("prefs", {
         "download.default_directory": Download_path,
